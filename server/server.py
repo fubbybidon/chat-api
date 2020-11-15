@@ -49,7 +49,7 @@ def handle(msg: str):
 app = Flask(__name__)
 sockets = Sockets(app)
 
-@sockets.route("/api/", methods=["GET"])
+@sockets.route("/", methods=["GET"])
 def chat(ws):
   while not ws.closed:
     try:
