@@ -6,5 +6,5 @@ docker:
   script:
     - docker build -f .docker/Dockerfile .
       --tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
-      --build-arg PYTHON_IMAGE=${NODE_IMAGE}
+      --build-arg PYTHON_IMAGE=${PYTHON_IMAGE}
     - docker push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
