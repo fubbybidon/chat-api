@@ -1,0 +1,15 @@
+stages:
+  - build
+  - publish
+  - deploy
+
+# These variables are declared here for informational purposes only. Their
+# values must be specified in the project CI-CD settings.
+variables:
+  DOCKER_IMAGE: docker:stable-git
+  PYTHON_IMAGE: python:3.9
+  DOCKER_SERVICE: rt_backend
+
+include:
+  - local: .gitlab/pipeline/build.yml
+  - local: .gitlab/pipeline/deploy.yml

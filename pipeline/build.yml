@@ -1,0 +1,10 @@
+docker:
+  stage: publish
+  image: $DOCKER_IMAGE
+  variables:
+    DOCKER_BUILDKIT: "1"
+  script:
+    - docker build -f .docker/Dockerfile .
+      --tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
+      --build-arg PYTHON_IMAGE=${NODE_IMAGE}
+    - docker push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}
