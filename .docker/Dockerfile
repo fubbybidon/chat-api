@@ -3,9 +3,9 @@ FROM ${PYTHON_IMAGE}
 
 WORKDIR /usr/src/chat
 
-COPY server/requirements.txt .
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY server .
+COPY . .
 
 CMD [ "python3", "server.py" ]

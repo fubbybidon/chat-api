@@ -11,12 +11,34 @@ from gevent import pywsgi
 from geventwebsocket.handler import WebSocketHandler
 from geventwebsocket.exceptions import WebSocketError
 
-logging.basicConfig(level=logging.INFO)
+from clean import clean
+from keras.models import load_model
+from keras.preprocessing.text import Tokenizer
+import numpy as np
+import pandas as pd
+
+logging.basicConfig(level=logging.DEBUG)
 
 with open('articles.json') as f:
   articles = json.load(f)
 
+# model = load_model('articles.h5')
+# df = pd.read_json('articles_clean.json').astype(str)
+
 def classify(text: str):
+  query = clean(text)
+  if query == '':
+    return None
+  logging.debug(f"Normalized request: {query}")
+
+  # tokenizer = Tokenizer(num_words=1000)
+  # tokenizer.fit_on_texts(df['query'].values)
+
+  # test = [query]
+  # xtest = tokenizer.texts_to_matrix(test, mode='binary')
+  # prediction = model.predict(np.array(xtest))
+
+  # return articles[np.argmax(prediction[0])]
   return articles[0]
 
 def handle(msg: str):
@@ -24,6 +46,8 @@ def handle(msg: str):
     req = json.loads(msg)
     if 'text' in req and isinstance(req['text'], str):
       article = classify(req['text'])
+      if article is None:
+        return None
       return json.dumps({
         "id": req['id'],
         "text": article['content'],

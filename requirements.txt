@@ -1,0 +1,10 @@
+Flask==1.1.2
+Flask-Sockets==0.2.1
+gevent==20.9.0
+gevent-websocket==0.10.1
+pymorphy2==0.8
+Keras==2.4.3
+nltk==3.5
+spacy==2.3.2
+pandas==1.1.4
+numpy==1.19.4
