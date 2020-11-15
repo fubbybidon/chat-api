@@ -32,14 +32,15 @@ def classify(text: str):
   logging.debug(f"Normalized request: {query}")
 
   tokenizer = Tokenizer(num_words=1000)
-  tokenizer.fit_on_texts(df['query'].values)
+  values = df['query'].values
+  tokenizer.fit_on_texts(values)
 
   test = [query]
   xtest = tokenizer.texts_to_matrix(test, mode='binary')
   prediction = model.predict(np.array(xtest))
 
   id = np.argmax(prediction[0])
-  logging.debug(f"Classidied as: {id}")
+  logging.debug(f"Classidied as: {id} {values[id]}")
   return articles[id]
 
 def handle(msg: str):
@@ -49,11 +50,15 @@ def handle(msg: str):
       article = classify(req['text'])
       if article is None:
         return None
+      content = 'Информауия доступна по ссылке ниже'
+      if 'content' in article:
+          content = article['content']
+
       return json.dumps({
         "id": req['id'],
-        "text": article['content'],
+        "text": content,
         "links": [{
-          "title": article['title'],
+          "title": article['category'],
           "link": article['link']
         }],
       })

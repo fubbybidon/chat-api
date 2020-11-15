@@ -12,7 +12,7 @@ from keras.datasets import imdb
 
 max_words = 1000
 batch_size = 32
-epochs = 3
+epochs = 5
 
 df = pd.read_json('articles_clean.json').astype(str)
 articles = len(df['id'].values)
