@@ -22,8 +22,8 @@ logging.basicConfig(level=logging.DEBUG)
 with open('articles.json') as f:
   articles = json.load(f)
 
-# model = load_model('articles.h5')
-# df = pd.read_json('articles_clean.json').astype(str)
+model = load_model('articles.h5')
+df = pd.read_json('articles_clean.json').astype(str)
 
 def classify(text: str):
   query = clean(text)
@@ -31,15 +31,16 @@ def classify(text: str):
     return None
   logging.debug(f"Normalized request: {query}")
 
-  # tokenizer = Tokenizer(num_words=1000)
-  # tokenizer.fit_on_texts(df['query'].values)
+  tokenizer = Tokenizer(num_words=1000)
+  tokenizer.fit_on_texts(df['query'].values)
 
-  # test = [query]
-  # xtest = tokenizer.texts_to_matrix(test, mode='binary')
-  # prediction = model.predict(np.array(xtest))
+  test = [query]
+  xtest = tokenizer.texts_to_matrix(test, mode='binary')
+  prediction = model.predict(np.array(xtest))
 
-  # return articles[np.argmax(prediction[0])]
-  return articles[0]
+  id = np.argmax(prediction[0])
+  logging.debug(f"Classidied as: {id}")
+  return articles[id]
 
 def handle(msg: str):
   try:

@@ -7,7 +7,7 @@ stages:
 # values must be specified in the project CI-CD settings.
 variables:
   DOCKER_IMAGE: docker:stable-git
-  PYTHON_IMAGE: python:3.9
+  PYTHON_IMAGE: python:3.8
   DOCKER_SERVICE: rt_backend
 
 include:
